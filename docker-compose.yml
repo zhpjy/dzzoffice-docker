@@ -1,0 +1,28 @@
+version: "3"
+services:
+  web:
+    #build: ./build
+    image: local/dzzoffice
+    container_name: dzzoffice
+    #用户id:组id，按照需求修改
+    user: "1000:1000"
+    ports:
+      - "80:80"
+    depends_on:
+      - mysql
+    volumes:
+    - ./web:/var/www/html
+  mysql:
+    image: mysql:5.7.27
+    restart: always
+    container_name: mysql57
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+    volumes:
+    - ./mysql:/var/lib/mysql
+  onlyoffice:
+    image: onlyoffice/documentserver
+    restart: always
+    container_name: onlyoffice
+    ports:
+      - "90:80"
